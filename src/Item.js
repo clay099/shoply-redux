@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import "./Item.css";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem, removeItem } from "./actions";
 
 export const Item = ({ id, description, image_url, name, price }) => {
 	const dispatch = useDispatch();
 
-	const INITIAL_STATE = { qty: 0 };
+	const cart = useSelector((state) => state.cart);
+	console.log(cart[id]);
+	let qty = (cart[id] && cart[id].qty) || 0;
+	console.log("qty", qty);
+
+	const INITIAL_STATE = { qty };
 	const [inputs, setInputs] = useState(INITIAL_STATE);
 	const handleChange = (e) => {
 		const { value, name } = e.target;
